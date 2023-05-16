@@ -1,0 +1,7 @@
+@use './../../style/abstracts/mixins' as *;
+
+.game-settings {
+  @include flex-mother();
+  min-height: 100vh;
+  background-color: var(--clr-primary-100);
+}
