@@ -1,3 +1,18 @@
+import { RouterProvider, createBrowserRouter } from 'react-router-dom';
+import { GameSettings } from './pages/GameSettings/GameSettings';
+import { Game } from './pages/Game/Game';
+
+const router = createBrowserRouter([
+  {
+    path: '/',
+    element: <GameSettings />,
+  },
+  {
+    path: '/game',
+    element: <Game />,
+  },
+]);
+
 export const App = () => {
-  return <h1>Husky Testing ASDddd!</h1>;
+  return <RouterProvider router={router} />;
 };
