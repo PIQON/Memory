@@ -6,12 +6,7 @@ import { SettingsContext } from '../SettingsContext/SettingsContext';
 import { SettingDataActions } from '../SettingsContext/SettingsContextActions';
 
 export const SettingsRow = ({ title, actions }: SettingData) => {
-  const {
-    state: { theme, players, boardSize },
-    dispatch,
-  } = useContext(SettingsContext);
-
-  console.log(theme, players, boardSize);
+  const { state, dispatch } = useContext(SettingsContext);
 
   return (
     <div className={style['settings-row']}>
@@ -23,7 +18,11 @@ export const SettingsRow = ({ title, actions }: SettingData) => {
             value={value}
             name={name}
             type="button"
-            classNames={['btn', 'btn--settings']}
+            classNames={[
+              'btn',
+              'btn--settings',
+              state[name] === value ? 'btn--active' : '',
+            ]}
             onClick={() =>
               dispatch({
                 type: SettingDataActions.CHANGE_SETTINGS,
