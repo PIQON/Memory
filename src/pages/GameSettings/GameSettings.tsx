@@ -8,7 +8,7 @@ import style from './GameSettings.module.scss';
 export const GameSettings = () => {
   return (
     <main className={style['game-settings']}>
-      <Wrapper maxWidth="40rem">
+      <Wrapper maxWidth="35rem">
         <header className={style['game-settings__header']}>
           <Link to="/">
             <Logo fillColor="#fcfcfc" />

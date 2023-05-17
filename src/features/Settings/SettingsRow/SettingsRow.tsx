@@ -15,8 +15,6 @@ export const SettingsRow = ({ title, actions }: SettingData) => {
         {actions.map(({ id, value, name, title }) => (
           <Button
             key={id}
-            value={value}
-            name={name}
             type="button"
             classNames={[
               'btn',

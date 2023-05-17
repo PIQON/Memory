@@ -8,3 +8,9 @@
   align-items: $alignItems;
   justify-content: $justifyContent;
 }
+
+@mixin media($media) {
+  @media (max-width: $media) {
+    @content;
+  }
+}

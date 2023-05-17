@@ -1,3 +1,4 @@
+import { Button } from '../UI/Button/Button';
 import style from './Settings.module.scss';
 import {
   settingsBoardDataActions,
@@ -15,6 +16,9 @@ export const Settings = () => {
         actions={settingsPlayersDataActions}
       />
       <SettingsRow title="Grid Size" actions={settingsBoardDataActions} />
+      <Button type="button" classNames={['btn', 'btn--start', 'btn--settings']}>
+        Start Game
+      </Button>
     </div>
   );
 };

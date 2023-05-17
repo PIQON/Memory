@@ -4,8 +4,6 @@ import style from './button.module.scss';
 type ButtonProps = {
   classNames: string[];
   type: 'submit' | 'button' | 'reset';
-  value?: string;
-  name?: string;
   onClick?: () => void;
 };
 
