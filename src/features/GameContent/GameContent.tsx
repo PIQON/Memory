@@ -9,7 +9,7 @@ export const GameContent = () => {
       <Wrapper maxWidth="70rem">
         <GameHeader />
       </Wrapper>
-      <Wrapper maxWidth="48rem">
+      <Wrapper maxWidth="36rem">
         <GameBoard />
       </Wrapper>
     </Fragment>

@@ -1,0 +1,17 @@
+@use './../../../../style/abstracts/mixins' as *;
+
+.game-card {
+  @include flex-mother();
+  position: relative;
+  width: 100%;
+  aspect-ratio: 1/1;
+  border-radius: 50%;
+  color: var(--clr-universal-400);
+  &--show {
+    background-color: var(--clr-primary-400);
+  }
+  &__value {
+    font-size: 2rem;
+    font-weight: 700;
+  }
+}

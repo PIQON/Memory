@@ -34,4 +34,25 @@
       background-color: var(--clr-primary-400-hover);
     }
   }
+
+  &--card {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    background-color: var(--clr-primary-200);
+    transition: 0.3s;
+    &:hover {
+      background-color: var(--clr-neutral-300);
+    }
+  }
+
+  &--show {
+    background-color: transparent;
+    &:hover {
+      background-color: transparent;
+    }
+  }
 }
