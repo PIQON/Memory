@@ -4,7 +4,7 @@ import { Action, SettingDataActions } from './SettingsContextActions';
 
 export type SettingsTheme = 'numbers' | 'icons';
 export type SettingsPlayers = '1' | '2' | '3' | '4';
-export type SettingsBoardSize = '4x4' | '6x6';
+export type SettingsBoardSize = 16 | 36;
 
 export type SettingsContextData = {
   theme: SettingsTheme;
@@ -15,7 +15,7 @@ export type SettingsContextData = {
 const initialState: SettingsContextData = {
   theme: 'numbers',
   players: '1',
-  boardSize: '4x4',
+  boardSize: 16,
 };
 
 export const SettingsContext = createContext<{

@@ -1,10 +1,17 @@
+import { Fragment } from 'react';
 import { Wrapper } from '../UI/Wrapper/Wrapper';
+import { GameBoard } from './GameBoard/GameBoard';
 import { GameHeader } from './GameHeader/GameHeader';
 
 export const GameContent = () => {
   return (
-    <Wrapper maxWidth="70rem">
-      <GameHeader />
-    </Wrapper>
+    <Fragment>
+      <Wrapper maxWidth="70rem">
+        <GameHeader />
+      </Wrapper>
+      <Wrapper maxWidth="48rem">
+        <GameBoard />
+      </Wrapper>
+    </Fragment>
   );
 };

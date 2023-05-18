@@ -64,12 +64,12 @@ export const settingsBoardDataActions: SettingDataActions[] = [
     id: 1,
     title: '4x4',
     name: 'boardSize',
-    value: '4x4',
+    value: 16,
   },
   {
     id: 2,
     title: '6x6',
     name: 'boardSize',
-    value: '6x6',
+    value: 36,
   },
 ];
