@@ -10,7 +10,6 @@ export const GameBoard = () => {
     state: { boardSize },
   } = useContext(SettingsContext);
   const { data } = useGameContext();
-  console.log(data);
   return (
     <div
       className={`${style['game-board']} ${style[`game-board--${boardSize}`]}`}

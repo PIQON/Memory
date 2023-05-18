@@ -6,6 +6,7 @@ import { GameBoardCardData } from '../GameBoard/GameBoardCard/GameBoardCard';
 
 type GameContextData = {
   data: GameBoardCardData[];
+  flipCard: (id: number) => void;
 };
 
 export const GameContext = createContext<GameContextData | null>(null);
@@ -15,6 +16,17 @@ export const GameContextProvider = ({ children }: ChildrenRoot) => {
     state: { boardSize, theme, players },
   } = useContext(SettingsContext);
   const [data, setData] = useState<GameBoardCardData[]>([]);
+  const [flippedCards, setFlippedCards] = useState<GameBoardCardData[]>([]);
+
+  useEffect(() => {
+    generateData();
+  }, [boardSize]);
+
+  useEffect(() => {
+    if (flippedCards.length === 2) {
+      checkCardMatches();
+    }
+  }, [flippedCards]);
 
   const generateData = () => {
     const generatedData: GameBoardCardData[] = [];
@@ -31,11 +43,56 @@ export const GameContextProvider = ({ children }: ChildrenRoot) => {
     setData(shuffleArray(generatedData));
   };
 
-  useEffect(() => {
-    generateData();
-  }, [boardSize]);
+  const flipCard = (id: number) => {
+    const card = data.find((cardData) => cardData.id === id);
+
+    if (!card) return;
+
+    if (flippedCards.length > 1 || card?.isActive || card?.isComplete) return;
+
+    const updatedCards = data.map((cardData) =>
+      cardData.id === id ? { ...cardData, isActive: true } : cardData
+    );
+
+    setData(updatedCards);
+    setFlippedCards([...flippedCards, card]);
+  };
+
+  const changeMatchesCardState = () => {
+    const [firstCard, secondCard] = flippedCards;
+
+    const updatedCards = data.map((cardData) => {
+      if ([firstCard.id, secondCard.id].includes(cardData.id)) {
+        return { ...cardData, isComplete: true };
+      }
+      return cardData;
+    });
+
+    setTimeout(() => {
+      setData(updatedCards);
+      setFlippedCards([]);
+    }, 1000);
+  };
+
+  const checkCardMatches = () => {
+    const [firstCard, secondCard] = flippedCards;
+
+    if (firstCard.value === secondCard.value) {
+      return changeMatchesCardState();
+    }
+    const updatedCards = data.map((cardData) =>
+      cardData.isComplete ? cardData : { ...cardData, isActive: false }
+    );
+
+    setTimeout(() => {
+      setData(updatedCards);
+      setFlippedCards([]);
+    }, 1000);
+  };
 
   return (
-    <GameContext.Provider value={{ data }}>{children}</GameContext.Provider>
+    <GameContext.Provider value={{ data, flipCard }}>
+      {children}
+    </GameContext.Provider>
   );
 };

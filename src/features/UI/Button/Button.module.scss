@@ -55,4 +55,9 @@
       background-color: transparent;
     }
   }
+
+  &--hidden {
+    pointer-events: none;
+    background-color: var(--clr-neutral-300);
+  }
 }
