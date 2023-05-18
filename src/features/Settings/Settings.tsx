@@ -1,3 +1,4 @@
+import { useNavigate } from 'react-router';
 import { Button } from '../UI/Button/Button';
 import style from './Settings.module.scss';
 import {
@@ -8,6 +9,8 @@ import {
 import { SettingsRow } from './SettingsRow/SettingsRow';
 
 export const Settings = () => {
+  const navigate = useNavigate();
+
   return (
     <div className={style['settings']}>
       <SettingsRow title="Select Theme" actions={settingsThemeDataActions} />
@@ -16,7 +19,11 @@ export const Settings = () => {
         actions={settingsPlayersDataActions}
       />
       <SettingsRow title="Grid Size" actions={settingsBoardDataActions} />
-      <Button type="button" classNames={['btn', 'btn--start', 'btn--settings']}>
+      <Button
+        type="button"
+        classNames={['btn', 'btn--primary', 'btn--settings']}
+        onClick={() => navigate('/game')}
+      >
         Start Game
       </Button>
     </div>

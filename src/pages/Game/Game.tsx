@@ -1,3 +1,10 @@
+import { GameContent } from '../../features/GameContent/GameContent';
+import style from './Game.module.scss';
+
 export const Game = () => {
-  return <h1>Game Page!</h1>;
+  return (
+    <main className={style['game']}>
+      <GameContent />
+    </main>
+  );
 };

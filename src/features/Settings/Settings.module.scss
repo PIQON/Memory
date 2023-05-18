@@ -1,4 +1,7 @@
+@use './../../style/abstracts/mixins' as *;
+
 .settings {
+  @include flex-mother(column, stretch, center);
   margin-top: 2rem;
   padding: 1.5rem;
   background-color: var(--clr-universal-400);
