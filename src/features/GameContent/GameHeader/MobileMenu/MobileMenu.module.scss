@@ -1,10 +1,8 @@
-@use './../../../style/abstracts/mixins' as *;
+@use './../../../../style/abstracts/mixins' as *;
+@use './../../../../style/abstracts/placeholders' as *;
 
 .menu {
-  margin-top: 2rem;
-  padding: 1.5rem;
-  background-color: var(--clr-universal-400);
-  border-radius: 11px;
+  @extend %container;
   &__list {
     @include flex-mother(column, center, center);
     gap: 1rem;

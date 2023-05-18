@@ -1,13 +1,13 @@
+import { Fragment } from 'react';
+import { useMediaQuery } from '../../../hooks/useMediaQuery';
+import { MobileMenu } from './MobileMenu/MobileMenu';
 import { Link } from 'react-router-dom';
 import { Logo } from '../../UI/Logo/Logo';
 import { Button } from '../../UI/Button/Button';
 
-import style from './GameContentHeader.module.scss';
-import { useMediaQuery } from '../../../hooks/useMediaQuery';
-import { Fragment } from 'react';
-import { GameContentMobileMenu } from '../GameContentMobileMenu/GameContentMobileMenu';
+import style from './GameHeader.module.scss';
 
-export const GameContentHeader = () => {
+export const GameHeader = () => {
   const matches = useMediaQuery('(max-width:48rem)');
 
   return (
@@ -17,7 +17,7 @@ export const GameContentHeader = () => {
       </Link>
       <div className={style['header__actions']}>
         {matches ? (
-          <GameContentMobileMenu />
+          <MobileMenu />
         ) : (
           <Fragment>
             <Button

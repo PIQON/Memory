@@ -1,0 +1,9 @@
+@use './mixins' as *;
+
+%container {
+  @include flex-mother(column, stretch, center);
+  margin-top: 2rem;
+  padding: 1.5rem;
+  background-color: var(--clr-universal-400);
+  border-radius: 11px;
+}

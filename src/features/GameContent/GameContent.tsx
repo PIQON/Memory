@@ -1,12 +1,10 @@
 import { Wrapper } from '../UI/Wrapper/Wrapper';
-import { GameContentHeader } from './GameContentHeader/GameContentHeader';
+import { GameHeader } from './GameHeader/GameHeader';
 
 export const GameContent = () => {
   return (
-    <div>
-      <Wrapper maxWidth="70rem">
-        <GameContentHeader />
-      </Wrapper>
-    </div>
+    <Wrapper maxWidth="70rem">
+      <GameHeader />
+    </Wrapper>
   );
 };
