@@ -1,7 +1,7 @@
 import { createContext, useContext, useEffect, useState } from 'react';
 import { ChildrenRoot } from '../../../types/shared';
 import { SettingsContext } from '../../Settings/SettingsContext/SettingsContext';
-import { REPETITION, shuffleArray } from './utils';
+import { REPETITION, icons, shuffleArray } from './utils';
 import { GameBoardCardData } from '../GameBoard/GameBoardCard/GameBoardCard';
 
 type GameContextData = {
@@ -18,9 +18,11 @@ export const GameContextProvider = ({ children }: ChildrenRoot) => {
   const [data, setData] = useState<GameBoardCardData[]>([]);
   const [flippedCards, setFlippedCards] = useState<GameBoardCardData[]>([]);
 
+  console.log(theme);
+
   useEffect(() => {
     generateData();
-  }, [boardSize]);
+  }, [boardSize, theme, players]);
 
   useEffect(() => {
     if (flippedCards.length === 2) {
@@ -34,12 +36,13 @@ export const GameContextProvider = ({ children }: ChildrenRoot) => {
       for (let j = 0; j < REPETITION; j++) {
         generatedData.push({
           id: +Math.random().toString(),
-          value: i.toString(),
+          value: i,
           isActive: false,
           isComplete: false,
         });
       }
     }
+    console.log(generatedData);
     setData(shuffleArray(generatedData));
   };
 

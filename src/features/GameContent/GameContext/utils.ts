@@ -1,3 +1,22 @@
+import {
+  faStar,
+  faMusic,
+  faHeart,
+  faCamera,
+  faCalculator,
+  faCalendar,
+  faAddressCard,
+  faCoffee,
+  faBaby,
+  faAreaChart,
+  faAngry,
+  faVenusMars,
+  faSackDollar,
+  faRankingStar,
+  faAppleAlt,
+  faTablet,
+} from '@fortawesome/free-solid-svg-icons';
+
 export const REPETITION = 2;
 
 /*
@@ -15,3 +34,27 @@ export const shuffleArray = <T>(data: T[]) => {
 
   return shuffledArray;
 };
+
+/*
+  @PARAM - Array
+  @DESCRIPTION - Random Icon from array
+*/
+
+export const icons = [
+  faStar,
+  faMusic,
+  faHeart,
+  faCamera,
+  faCalculator,
+  faCalendar,
+  faAddressCard,
+  faCoffee,
+  faBaby,
+  faAreaChart,
+  faAngry,
+  faVenusMars,
+  faSackDollar,
+  faRankingStar,
+  faAppleAlt,
+  faTablet,
+];
