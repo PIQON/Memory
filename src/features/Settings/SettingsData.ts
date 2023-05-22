@@ -37,25 +37,25 @@ export const settingsPlayersDataActions: SettingDataActions[] = [
     id: 1,
     title: '1',
     name: 'players',
-    value: '1',
+    value: 1,
   },
   {
     id: 2,
     title: '2',
     name: 'players',
-    value: '2',
+    value: 2,
   },
   {
     id: 3,
     title: '3',
     name: 'players',
-    value: '3',
+    value: 3,
   },
   {
     id: 4,
     title: '4',
     name: 'players',
-    value: '4',
+    value: 4,
   },
 ];
 

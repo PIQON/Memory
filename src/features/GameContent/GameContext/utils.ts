@@ -15,6 +15,8 @@ import {
   faRankingStar,
   faAppleAlt,
   faTablet,
+  faTShirt,
+  faRainbow,
 } from '@fortawesome/free-solid-svg-icons';
 
 export const REPETITION = 2;
@@ -57,4 +59,6 @@ export const icons = [
   faRankingStar,
   faAppleAlt,
   faTablet,
+  faTShirt,
+  faRainbow,
 ];

@@ -3,7 +3,7 @@ import { ChildrenRoot } from '../../../types/shared';
 import { Action, SettingDataActions } from './SettingsContextActions';
 
 export type SettingsTheme = 'numbers' | 'icons';
-export type SettingsPlayers = '1' | '2' | '3' | '4';
+export type SettingsPlayers = 1 | 2 | 3 | 4;
 export type SettingsBoardSize = 16 | 36;
 
 export type SettingsContextData = {
@@ -14,7 +14,7 @@ export type SettingsContextData = {
 
 const initialState: SettingsContextData = {
   theme: 'numbers',
-  players: '1',
+  players: 1,
   boardSize: 16,
 };
 

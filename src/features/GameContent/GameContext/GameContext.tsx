@@ -1,12 +1,23 @@
 import { createContext, useContext, useEffect, useState } from 'react';
 import { ChildrenRoot } from '../../../types/shared';
-import { SettingsContext } from '../../Settings/SettingsContext/SettingsContext';
-import { REPETITION, icons, shuffleArray } from './utils';
+import {
+  SettingsContext,
+  SettingsPlayers,
+} from '../../Settings/SettingsContext/SettingsContext';
+import { REPETITION, shuffleArray } from './utils';
 import { GameBoardCardData } from '../GameBoard/GameBoardCard/GameBoardCard';
+
+type PlayersStatistics = {
+  player: number;
+  matches: number;
+  moves: number;
+};
 
 type GameContextData = {
   data: GameBoardCardData[];
   flipCard: (id: number) => void;
+  statistics: PlayersStatistics[];
+  activePlayer: SettingsPlayers;
 };
 
 export const GameContext = createContext<GameContextData | null>(null);
@@ -17,11 +28,12 @@ export const GameContextProvider = ({ children }: ChildrenRoot) => {
   } = useContext(SettingsContext);
   const [data, setData] = useState<GameBoardCardData[]>([]);
   const [flippedCards, setFlippedCards] = useState<GameBoardCardData[]>([]);
-
-  console.log(theme);
+  const [statistics, setStatistics] = useState<PlayersStatistics[]>([]);
+  const [activePlayer, setActivePlayer] = useState(1);
 
   useEffect(() => {
     generateData();
+    generatePlayers();
   }, [boardSize, theme, players]);
 
   useEffect(() => {
@@ -42,8 +54,22 @@ export const GameContextProvider = ({ children }: ChildrenRoot) => {
         });
       }
     }
-    console.log(generatedData);
+
     setData(shuffleArray(generatedData));
+  };
+
+  const generatePlayers = () => {
+    const playersStatistics: PlayersStatistics[] = [];
+
+    for (let i = 1; i <= players; i++) {
+      playersStatistics.push({
+        player: i,
+        matches: 0,
+        moves: 0,
+      });
+    }
+
+    setStatistics(playersStatistics);
   };
 
   const flipCard = (id: number) => {
@@ -59,6 +85,11 @@ export const GameContextProvider = ({ children }: ChildrenRoot) => {
 
     setData(updatedCards);
     setFlippedCards([...flippedCards, card]);
+  };
+
+  const changeActivePlayer = () => {
+    const newPlayer = activePlayer + 1;
+    setActivePlayer(newPlayer > players ? 1 : newPlayer);
   };
 
   const changeMatchesCardState = () => {
@@ -87,6 +118,19 @@ export const GameContextProvider = ({ children }: ChildrenRoot) => {
       cardData.isComplete ? cardData : { ...cardData, isActive: false }
     );
 
+    const newMoves = statistics.map((statistic) => {
+      if (statistic.player === activePlayer) {
+        return {
+          ...statistic,
+          moves: (statistics[activePlayer - 1].moves += 1),
+        };
+      }
+      return statistic;
+    });
+
+    setStatistics(newMoves);
+    changeActivePlayer();
+
     setTimeout(() => {
       setData(updatedCards);
       setFlippedCards([]);
@@ -94,7 +138,7 @@ export const GameContextProvider = ({ children }: ChildrenRoot) => {
   };
 
   return (
-    <GameContext.Provider value={{ data, flipCard }}>
+    <GameContext.Provider value={{ data, flipCard, statistics, activePlayer }}>
       {children}
     </GameContext.Provider>
   );

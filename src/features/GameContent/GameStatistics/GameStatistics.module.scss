@@ -1,0 +1,7 @@
+@use './../../../style/abstracts/mixins' as *;
+
+.game-statistics {
+  @include flex-mother(row, center, space-between);
+  gap: 1rem;
+  margin-top: 4rem;
+}
