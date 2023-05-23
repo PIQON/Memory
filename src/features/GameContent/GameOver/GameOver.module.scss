@@ -3,10 +3,10 @@
 
 .game-over {
   @extend %container;
-  min-width: 550px;
+  min-width: 36rem;
   text-align: center;
   @include media(36rem) {
-    min-width: 330px;
+    min-width: 20rem;
   }
   &__title {
     font-size: 2.7rem;

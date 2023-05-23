@@ -33,6 +33,7 @@ export const GameOver = () => {
           value={`${currentWinner?.matches} ${
             players === 1 ? `Moves` : `Pairs`
           }`}
+          className="winner"
         />
         {statistics
           .filter((statistic) => statistic.player !== currentWinner?.player)
@@ -42,6 +43,9 @@ export const GameOver = () => {
                 key={statistic.player}
                 title={`Player ${statistic.player}`}
                 value={`${statistic.matches} Pairs`}
+                className={
+                  statistic.player === currentWinner?.player ? 'winner' : ''
+                }
               />
             );
           })}

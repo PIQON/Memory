@@ -2,6 +2,8 @@
 
 .router-link:link,
 .router-link:visited {
+  display: inline-block;
+  text-decoration: none;
   flex-grow: 1;
   padding: 1rem 1.75rem;
   background-color: var(--clr-primary-300);
