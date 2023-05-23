@@ -5,7 +5,10 @@ import {
   SettingsPlayers,
 } from '../../Settings/SettingsContext/SettingsContext';
 import { REPETITION, shuffleArray } from './utils';
-import { GameBoardCardData } from '../GameBoard/GameBoardCard/GameBoardCard';
+import {
+  GameBoardCard,
+  GameBoardCardData,
+} from '../GameBoard/GameBoardCard/GameBoardCard';
 
 type PlayersStatistics = {
   player: number;
@@ -15,9 +18,11 @@ type PlayersStatistics = {
 
 type GameContextData = {
   data: GameBoardCardData[];
+  matchedCards: GameBoardCardData[];
   flipCard: (id: number) => void;
   statistics: PlayersStatistics[];
-  activePlayer: SettingsPlayers;
+  activePlayer: number;
+  currentWinner: PlayersStatistics | null;
 };
 
 export const GameContext = createContext<GameContextData | null>(null);
@@ -28,8 +33,12 @@ export const GameContextProvider = ({ children }: ChildrenRoot) => {
   } = useContext(SettingsContext);
   const [data, setData] = useState<GameBoardCardData[]>([]);
   const [flippedCards, setFlippedCards] = useState<GameBoardCardData[]>([]);
+  const [matchedCards, setMatchedCards] = useState<GameBoardCardData[]>([]);
   const [statistics, setStatistics] = useState<PlayersStatistics[]>([]);
   const [activePlayer, setActivePlayer] = useState(1);
+  const [currentWinner, setCurrentWinner] = useState<PlayersStatistics | null>(
+    null
+  );
 
   useEffect(() => {
     generateData();
@@ -102,6 +111,10 @@ export const GameContextProvider = ({ children }: ChildrenRoot) => {
       return cardData;
     });
 
+    setMatchedCards([...matchedCards, firstCard, secondCard]);
+
+    changePlayerStatistics({ isWin: true });
+
     setTimeout(() => {
       setData(updatedCards);
       setFlippedCards([]);
@@ -118,17 +131,7 @@ export const GameContextProvider = ({ children }: ChildrenRoot) => {
       cardData.isComplete ? cardData : { ...cardData, isActive: false }
     );
 
-    const newMoves = statistics.map((statistic) => {
-      if (statistic.player === activePlayer) {
-        return {
-          ...statistic,
-          moves: (statistics[activePlayer - 1].moves += 1),
-        };
-      }
-      return statistic;
-    });
-
-    setStatistics(newMoves);
+    changePlayerStatistics({ isWin: false });
     changeActivePlayer();
 
     setTimeout(() => {
@@ -137,8 +140,43 @@ export const GameContextProvider = ({ children }: ChildrenRoot) => {
     }, 1000);
   };
 
+  const changePlayerStatistics = ({ isWin }: { isWin: boolean }) => {
+    const newMoves = statistics.map((statistic) => {
+      if (statistic.player === activePlayer) {
+        return {
+          ...statistic,
+          moves: (statistics[activePlayer - 1].moves += 1),
+          matches: isWin
+            ? statistics[activePlayer - 1].matches + 1
+            : statistics[activePlayer - 1].matches,
+        };
+      }
+      return statistic;
+    });
+
+    currentGameWinner();
+    setStatistics(newMoves);
+  };
+
+  const currentGameWinner = () => {
+    const currentPlayerWinner = statistics.sort(
+      (a, b) => b.matches - a.matches
+    );
+
+    setCurrentWinner(currentPlayerWinner[0]);
+  };
+
   return (
-    <GameContext.Provider value={{ data, flipCard, statistics, activePlayer }}>
+    <GameContext.Provider
+      value={{
+        data,
+        flipCard,
+        statistics,
+        activePlayer,
+        matchedCards,
+        currentWinner,
+      }}
+    >
       {children}
     </GameContext.Provider>
   );

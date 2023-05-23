@@ -6,10 +6,14 @@ import { StatisticsItem } from './StatisticsItem/StatisticsItem';
 import { useMediaQuery } from '../../../hooks/useMediaQuery';
 
 const SinglePlayerPanel = () => {
+  const { statistics } = useGameContext();
+
+  console.log(statistics);
+
   return (
     <Fragment>
       <StatisticsItem title="Time" value={0.0} />
-      <StatisticsItem title="Moves" value={0} />
+      <StatisticsItem title="Moves" value={statistics[0]?.moves} />
     </Fragment>
   );
 };
