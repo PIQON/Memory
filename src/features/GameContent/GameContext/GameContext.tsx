@@ -23,6 +23,7 @@ type GameContextData = {
   statistics: PlayersStatistics[];
   activePlayer: number;
   currentWinner: PlayersStatistics | null;
+  resetGame: () => void;
 };
 
 export const GameContext = createContext<GameContextData | null>(null);
@@ -166,6 +167,15 @@ export const GameContextProvider = ({ children }: ChildrenRoot) => {
     setCurrentWinner(currentPlayerWinner[0]);
   };
 
+  const resetGame = () => {
+    generateData();
+    generatePlayers();
+    setCurrentWinner(null);
+    setFlippedCards([]);
+    setMatchedCards([]);
+    setActivePlayer(1);
+  };
+
   return (
     <GameContext.Provider
       value={{
@@ -175,6 +185,7 @@ export const GameContextProvider = ({ children }: ChildrenRoot) => {
         activePlayer,
         matchedCards,
         currentWinner,
+        resetGame,
       }}
     >
       {children}

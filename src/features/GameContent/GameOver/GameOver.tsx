@@ -1,18 +1,17 @@
 import { SettingsContext } from '../../Settings/SettingsContext/SettingsContext';
 import { useGameContext } from '../GameContext/useGameContext';
 import { useContext } from 'react';
-import style from './GameOver.module.scss';
 import { StatisticsItem } from '../GameStatistics/StatisticsItem/StatisticsItem';
 import { Button } from '../../UI/Button/Button';
-import { Link } from 'react-router-dom';
+import { RouterLink } from '../../UI/RouterLink/RouterLink';
+
+import style from './GameOver.module.scss';
 
 export const GameOver = () => {
-  const { currentWinner, statistics } = useGameContext();
+  const { currentWinner, statistics, resetGame } = useGameContext();
   const {
     state: { players },
   } = useContext(SettingsContext);
-
-  console.log(currentWinner);
 
   return (
     <div className={style['game-over']}>
@@ -26,8 +25,14 @@ export const GameOver = () => {
       </p>
       <div className={style['game-over__statistics']}>
         <StatisticsItem
-          title={`Player ${currentWinner?.player} (Winner)`}
-          value={`${currentWinner?.matches} Pairs`}
+          title={`${
+            players === 1
+              ? `Moves Taken`
+              : `Player ${currentWinner?.player} (Winner)`
+          }`}
+          value={`${currentWinner?.matches} ${
+            players === 1 ? `Moves` : `Pairs`
+          }`}
         />
         {statistics
           .filter((statistic) => statistic.player !== currentWinner?.player)
@@ -45,12 +50,11 @@ export const GameOver = () => {
         <Button
           type="button"
           classNames={['btn', 'btn--settings', 'btn--primary']}
+          onClick={resetGame}
         >
           Restart
         </Button>
-        <Link to="/" className={style['mobile-link']}>
-          Setup New Game
-        </Link>
+        <RouterLink path="/" title="Start New Game" />
       </div>
     </div>
   );

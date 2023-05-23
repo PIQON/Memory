@@ -10,12 +10,7 @@ const SinglePlayerPanel = () => {
 
   console.log(statistics);
 
-  return (
-    <Fragment>
-      <StatisticsItem title="Time" value={0.0} />
-      <StatisticsItem title="Moves" value={statistics[0]?.moves} />
-    </Fragment>
-  );
+  return <StatisticsItem title="Moves" value={statistics[0]?.moves} />;
 };
 
 const MultiPlayerPanel = () => {

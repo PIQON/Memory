@@ -2,7 +2,7 @@ import style from './StatisticsItem.module.scss';
 
 type StatisticsItemProps = {
   title: string;
-  value: number;
+  value: string | number;
 };
 
 export const StatisticsItem = ({ title, value }: StatisticsItemProps) => {

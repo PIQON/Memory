@@ -1,13 +1,16 @@
 import { Fragment } from 'react';
 import { useModalContext } from '../../../../store/modal/useModalContext';
 import { Modal } from '../../../UI/Modal/Modal';
-import { Link } from 'react-router-dom';
 import { Button } from '../../../UI/Button/Button';
+
+import { useGameContext } from '../../GameContext/useGameContext';
+import { RouterLink } from '../../../UI/RouterLink/RouterLink';
 
 import style from './MobileMenu.module.scss';
 
 export const MobileMenu = () => {
   const { isOpen, openModal, closeModal } = useModalContext();
+  const { resetGame } = useGameContext();
 
   return (
     <Fragment>
@@ -28,18 +31,23 @@ export const MobileMenu = () => {
                 <Button
                   type="button"
                   classNames={['btn', 'btn--settings', 'btn--primary']}
+                  onClick={() => {
+                    resetGame();
+                    closeModal();
+                  }}
                 >
                   Restart
                 </Button>
               </li>
               <li className={style['menu__item']}>
-                <Link
-                  to="/"
-                  className={style['mobile-link']}
-                  onClick={closeModal}
-                >
-                  New Game
-                </Link>
+                <RouterLink
+                  path="/"
+                  title="New Game"
+                  onClick={() => {
+                    resetGame();
+                    closeModal();
+                  }}
+                />
               </li>
               <li className={style['menu__item']}>
                 <Button

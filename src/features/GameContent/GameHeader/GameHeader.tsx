@@ -5,9 +5,13 @@ import { Link } from 'react-router-dom';
 import { Logo } from '../../UI/Logo/Logo';
 import { Button } from '../../UI/Button/Button';
 
+import { useGameContext } from '../GameContext/useGameContext';
+
 import style from './GameHeader.module.scss';
+import { RouterLink } from '../../UI/RouterLink/RouterLink';
 
 export const GameHeader = () => {
+  const { resetGame } = useGameContext();
   const matches = useMediaQuery('(max-width:48rem)');
 
   return (
@@ -23,12 +27,11 @@ export const GameHeader = () => {
             <Button
               type="button"
               classNames={['btn', 'btn--settings', 'btn--primary']}
+              onClick={resetGame}
             >
               Restart
             </Button>
-            <Button type="button" classNames={['btn', 'btn--settings']}>
-              New Game
-            </Button>
+            <RouterLink path="/" title="New Game" />
           </Fragment>
         )}
       </div>
