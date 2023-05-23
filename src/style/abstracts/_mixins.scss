@@ -14,3 +14,18 @@
     @content;
   }
 }
+
+@mixin positioningElement(
+  $position: absolute,
+  $top: 0,
+  $left: 0,
+  $fromBottom: false
+) {
+  position: $position;
+  left: $left;
+  @if ($fromBottom) {
+    bottom: $top;
+  } @else {
+    top: $top;
+  }
+}

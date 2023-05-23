@@ -8,13 +8,11 @@ import { useMediaQuery } from '../../../hooks/useMediaQuery';
 const SinglePlayerPanel = () => {
   const { statistics } = useGameContext();
 
-  console.log(statistics);
-
   return <StatisticsItem title="Moves" value={statistics[0]?.moves} />;
 };
 
 const MultiPlayerPanel = () => {
-  const { statistics } = useGameContext();
+  const { statistics, activePlayer } = useGameContext();
   const matches = useMediaQuery('(max-width:48rem)');
   return (
     <Fragment>
@@ -23,6 +21,7 @@ const MultiPlayerPanel = () => {
           key={statistic.player}
           title={`${matches ? 'P' : 'Player '}${statistic.player}`}
           value={statistic.moves}
+          className={statistic.player === activePlayer ? 'current' : ''}
         />
       ))}
     </Fragment>
