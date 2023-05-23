@@ -2,19 +2,22 @@ import React from 'react';
 import ReactDOM from 'react-dom/client';
 import { App } from './App';
 
-import './style/style.scss';
 import { SettingsContextProvider } from './features/Settings/SettingsContext/SettingsContext';
-import { ModalContextProvider } from './store/modal/modalContext';
 import { GameContextProvider } from './features/GameContent/GameContext/GameContext';
+
+import './style/style.scss';
+
+import { store } from './store/store';
+import { Provider } from 'react-redux';
 
 ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
   <React.StrictMode>
-    <ModalContextProvider>
-      <SettingsContextProvider>
-        <GameContextProvider>
+    <SettingsContextProvider>
+      <GameContextProvider>
+        <Provider store={store}>
           <App />
-        </GameContextProvider>
-      </SettingsContextProvider>
-    </ModalContextProvider>
+        </Provider>
+      </GameContextProvider>
+    </SettingsContextProvider>
   </React.StrictMode>
 );

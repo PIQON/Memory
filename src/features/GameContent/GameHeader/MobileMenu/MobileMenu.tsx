@@ -1,5 +1,6 @@
+import { useSelector, useDispatch } from 'react-redux';
+
 import { Fragment } from 'react';
-import { useModalContext } from '../../../../store/modal/useModalContext';
 import { Modal } from '../../../UI/Modal/Modal';
 import { Button } from '../../../UI/Button/Button';
 
@@ -7,9 +8,13 @@ import { useGameContext } from '../../GameContext/useGameContext';
 import { RouterLink } from '../../../UI/RouterLink/RouterLink';
 
 import style from './MobileMenu.module.scss';
+import { RootState } from '../../../../store/store';
+import { closeModal, openModal } from '../../../../store/slices/modalSlice';
 
 export const MobileMenu = () => {
-  const { isOpen, openModal, closeModal } = useModalContext();
+  const { isOpen } = useSelector((state: RootState) => state.modal);
+  const dispatch = useDispatch();
+
   const { resetGame } = useGameContext();
 
   return (
@@ -19,7 +24,7 @@ export const MobileMenu = () => {
         classNames={['btn', 'btn--settings', 'btn--primary']}
         aria-label={`${isOpen ? 'Close' : 'Open'} menu`}
         aria-expanded={isOpen}
-        onClick={openModal}
+        onClick={() => dispatch(openModal())}
       >
         Menu
       </Button>
@@ -33,7 +38,7 @@ export const MobileMenu = () => {
                   classNames={['btn', 'btn--settings', 'btn--primary']}
                   onClick={() => {
                     resetGame();
-                    closeModal();
+                    dispatch(closeModal());
                   }}
                 >
                   Restart
@@ -45,7 +50,7 @@ export const MobileMenu = () => {
                   title="New Game"
                   onClick={() => {
                     resetGame();
-                    closeModal();
+                    dispatch(closeModal());
                   }}
                 />
               </li>
@@ -53,7 +58,7 @@ export const MobileMenu = () => {
                 <Button
                   type="button"
                   classNames={['btn', 'btn--settings']}
-                  onClick={closeModal}
+                  onClick={() => dispatch(closeModal())}
                 >
                   Resume Game
                 </Button>
