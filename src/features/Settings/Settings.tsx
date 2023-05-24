@@ -1,6 +1,5 @@
 import { useNavigate } from 'react-router';
 import { Button } from '../UI/Button/Button';
-import style from './Settings.module.scss';
 import {
   settingsBoardDataActions,
   settingsPlayersDataActions,
@@ -8,8 +7,22 @@ import {
 } from './SettingsData';
 import { SettingsRow } from './SettingsRow/SettingsRow';
 
+import { useEffect } from 'react';
+
+import style from './Settings.module.scss';
+import { useDispatch, useSelector } from 'react-redux';
+import { RootState } from '../../store/store';
+import { generateCards, shuffleCards } from '../../store/slices/game/gameSlice';
+
 export const Settings = () => {
+  const { settings } = useSelector((state: RootState) => state.game);
+  const dispatch = useDispatch();
   const navigate = useNavigate();
+
+  useEffect(() => {
+    dispatch(generateCards());
+    dispatch(shuffleCards());
+  }, [settings]);
 
   return (
     <div className={style['settings']}>

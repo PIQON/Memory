@@ -1,9 +1,10 @@
-import { useContext, Fragment } from 'react';
-import { SettingsContext } from '../../Settings/SettingsContext/SettingsContext';
+import { Fragment } from 'react';
 import { useGameContext } from '../GameContext/useGameContext';
 import style from './GameStatistics.module.scss';
 import { StatisticsItem } from './StatisticsItem/StatisticsItem';
 import { useMediaQuery } from '../../../hooks/useMediaQuery';
+import { useSelector } from 'react-redux';
+import { RootState } from '../../../store/store';
 
 const SinglePlayerPanel = () => {
   const { statistics } = useGameContext();
@@ -29,13 +30,11 @@ const MultiPlayerPanel = () => {
 };
 
 export const GameStatistics = () => {
-  const {
-    state: { players },
-  } = useContext(SettingsContext);
+  const { settings } = useSelector((state: RootState) => state.game);
 
   return (
     <div className={style['game-statistics']}>
-      {players === 1 ? <SinglePlayerPanel /> : <MultiPlayerPanel />}
+      {settings.players === 1 ? <SinglePlayerPanel /> : <MultiPlayerPanel />}
     </div>
   );
 };

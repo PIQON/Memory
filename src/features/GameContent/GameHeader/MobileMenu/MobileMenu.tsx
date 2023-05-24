@@ -9,7 +9,10 @@ import { RouterLink } from '../../../UI/RouterLink/RouterLink';
 
 import style from './MobileMenu.module.scss';
 import { RootState } from '../../../../store/store';
-import { closeModal, openModal } from '../../../../store/slices/modalSlice';
+import {
+  closeModal,
+  openModal,
+} from '../../../../store/slices/modal/modalSlice';
 
 export const MobileMenu = () => {
   const { isOpen } = useSelector((state: RootState) => state.modal);

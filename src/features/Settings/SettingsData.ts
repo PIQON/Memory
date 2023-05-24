@@ -1,14 +1,14 @@
 import {
+  Settings,
   SettingsBoardSize,
-  SettingsContextData,
   SettingsPlayers,
   SettingsTheme,
-} from './SettingsContext/SettingsContext';
+} from '../../store/slices/game/types';
 
 type SettingDataActions = {
   id: number;
   title: string;
-  name: keyof SettingsContextData;
+  name: keyof Settings;
   value: SettingsTheme | SettingsPlayers | SettingsBoardSize;
 };
 

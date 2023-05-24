@@ -1,4 +1,4 @@
-import { Fragment } from 'react';
+import { Fragment, useEffect } from 'react';
 import { Wrapper } from '../UI/Wrapper/Wrapper';
 import { GameBoard } from './GameBoard/GameBoard';
 import { GameHeader } from './GameHeader/GameHeader';
@@ -6,13 +6,23 @@ import { GameStatistics } from './GameStatistics/GameStatistics';
 import { useGameContext } from './GameContext/useGameContext';
 import { Modal } from '../UI/Modal/Modal';
 import { GameOver } from './GameOver/GameOver';
+import { useSelector } from 'react-redux';
+import { RootState } from '../../store/store';
+import { useNavigate } from 'react-router';
 
 export const GameContent = () => {
-  const { matchedCards, data } = useGameContext();
+  const { matchedCards } = useGameContext();
+  const navigate = useNavigate();
+
+  const { cards } = useSelector((state: RootState) => state.game);
+
+  useEffect(() => {
+    cards.length === 0 && navigate('/');
+  }, []);
 
   return (
     <Fragment>
-      {matchedCards.length === data.length && (
+      {matchedCards.length === cards.length && (
         <Modal>
           <GameOver />
         </Modal>

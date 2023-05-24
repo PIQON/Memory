@@ -1,22 +1,20 @@
-import { SettingsContext } from '../../Settings/SettingsContext/SettingsContext';
 import { useGameContext } from '../GameContext/useGameContext';
-import { useContext } from 'react';
 import { StatisticsItem } from '../GameStatistics/StatisticsItem/StatisticsItem';
 import { Button } from '../../UI/Button/Button';
 import { RouterLink } from '../../UI/RouterLink/RouterLink';
 
 import style from './GameOver.module.scss';
+import { useSelector } from 'react-redux';
+import { RootState } from '../../../store/store';
 
 export const GameOver = () => {
   const { currentWinner, statistics, resetGame } = useGameContext();
-  const {
-    state: { players },
-  } = useContext(SettingsContext);
+  const { settings } = useSelector((state: RootState) => state.game);
 
   return (
     <div className={style['game-over']}>
       <p className={style['game-over__title']}>
-        {players === 1
+        {settings.players === 1
           ? 'You did it!'
           : `Player ${currentWinner?.player} Wins!`}
       </p>
@@ -26,12 +24,12 @@ export const GameOver = () => {
       <div className={style['game-over__statistics']}>
         <StatisticsItem
           title={`${
-            players === 1
+            settings.players === 1
               ? `Moves Taken`
               : `Player ${currentWinner?.player} (Winner)`
           }`}
           value={`${currentWinner?.matches} ${
-            players === 1 ? `Moves` : `Pairs`
+            settings.players === 1 ? `Moves` : `Pairs`
           }`}
           className="winner"
         />

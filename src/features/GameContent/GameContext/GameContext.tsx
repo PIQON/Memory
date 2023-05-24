@@ -1,14 +1,8 @@
-import { createContext, useContext, useEffect, useState } from 'react';
+import { createContext, useEffect, useState } from 'react';
 import { ChildrenRoot } from '../../../types/shared';
-import {
-  SettingsContext,
-  SettingsPlayers,
-} from '../../Settings/SettingsContext/SettingsContext';
-import { REPETITION, shuffleArray } from './utils';
-import {
-  GameBoardCard,
-  GameBoardCardData,
-} from '../GameBoard/GameBoardCard/GameBoardCard';
+
+import { useSelector } from 'react-redux';
+import { RootState } from '../../../store/store';
 
 type PlayersStatistics = {
   player: number;
@@ -17,8 +11,8 @@ type PlayersStatistics = {
 };
 
 type GameContextData = {
-  data: GameBoardCardData[];
-  matchedCards: GameBoardCardData[];
+  data: any[];
+  matchedCards: any[];
   flipCard: (id: number) => void;
   statistics: PlayersStatistics[];
   activePlayer: number;
@@ -29,12 +23,10 @@ type GameContextData = {
 export const GameContext = createContext<GameContextData | null>(null);
 
 export const GameContextProvider = ({ children }: ChildrenRoot) => {
-  const {
-    state: { boardSize, theme, players },
-  } = useContext(SettingsContext);
-  const [data, setData] = useState<GameBoardCardData[]>([]);
-  const [flippedCards, setFlippedCards] = useState<GameBoardCardData[]>([]);
-  const [matchedCards, setMatchedCards] = useState<GameBoardCardData[]>([]);
+  const { settings } = useSelector((state: RootState) => state.game);
+  const [data, setData] = useState<any[]>([]);
+  const [flippedCards, setFlippedCards] = useState<any[]>([]);
+  const [matchedCards, setMatchedCards] = useState<any[]>([]);
   const [statistics, setStatistics] = useState<PlayersStatistics[]>([]);
   const [activePlayer, setActivePlayer] = useState(1);
   const [currentWinner, setCurrentWinner] = useState<PlayersStatistics | null>(
@@ -42,36 +34,15 @@ export const GameContextProvider = ({ children }: ChildrenRoot) => {
   );
 
   useEffect(() => {
-    generateData();
-    generatePlayers();
-  }, [boardSize, theme, players]);
-
-  useEffect(() => {
     if (flippedCards.length === 2) {
       checkCardMatches();
     }
   }, [flippedCards]);
 
-  const generateData = () => {
-    const generatedData: GameBoardCardData[] = [];
-    for (let i = 1; i <= boardSize / REPETITION; i++) {
-      for (let j = 0; j < REPETITION; j++) {
-        generatedData.push({
-          id: +Math.random().toString(),
-          value: i,
-          isActive: false,
-          isComplete: false,
-        });
-      }
-    }
-
-    setData(shuffleArray(generatedData));
-  };
-
   const generatePlayers = () => {
     const playersStatistics: PlayersStatistics[] = [];
 
-    for (let i = 1; i <= players; i++) {
+    for (let i = 1; i <= settings.players; i++) {
       playersStatistics.push({
         player: i,
         matches: 0,
@@ -99,7 +70,7 @@ export const GameContextProvider = ({ children }: ChildrenRoot) => {
 
   const changeActivePlayer = () => {
     const newPlayer = activePlayer + 1;
-    setActivePlayer(newPlayer > players ? 1 : newPlayer);
+    setActivePlayer(newPlayer > settings.players ? 1 : newPlayer);
   };
 
   const changeMatchesCardState = () => {
@@ -168,7 +139,6 @@ export const GameContextProvider = ({ children }: ChildrenRoot) => {
   };
 
   const resetGame = () => {
-    generateData();
     generatePlayers();
     setCurrentWinner(null);
     setFlippedCards([]);

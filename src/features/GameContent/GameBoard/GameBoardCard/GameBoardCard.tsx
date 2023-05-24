@@ -1,30 +1,23 @@
 import { Button } from '../../../UI/Button/Button';
 import { useGameContext } from '../../GameContext/useGameContext';
 import style from './GameBoardCard.module.scss';
-import { SettingsContext } from '../../../Settings/SettingsContext/SettingsContext';
 
-import { useContext } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 import { icons } from '../../GameContext/utils';
+import { useSelector } from 'react-redux';
+import { RootState } from '../../../../store/store';
 
-export type GameBoardCardData = {
-  id: number;
+export type Card = {
+  id: string;
   value: number;
   isActive: boolean;
   isComplete: boolean;
 };
 
-export const GameBoardCard = ({
-  id,
-  value,
-  isActive,
-  isComplete,
-}: GameBoardCardData) => {
+export const GameBoardCard = ({ id, value, isActive, isComplete }: Card) => {
   const { flipCard } = useGameContext();
-  const {
-    state: { theme },
-  } = useContext(SettingsContext);
+  const { settings } = useSelector((state: RootState) => state.game);
 
   return (
     <div
@@ -36,12 +29,12 @@ export const GameBoardCard = ({
         type="button"
         classNames={['btn', 'btn--card', `${isActive && 'btn--show'}`]}
         tabIndex={isComplete ? -1 : undefined}
-        onClick={() => flipCard(id)}
+        onClick={() => flipCard(0)}
       >
         &nbsp;
       </Button>
       <span className={style['game-card__value']}>
-        {theme === 'numbers' ? (
+        {settings.theme === 'numbers' ? (
           value
         ) : (
           <FontAwesomeIcon icon={icons[value - 1]} />

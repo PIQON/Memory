@@ -2,7 +2,6 @@ import React from 'react';
 import ReactDOM from 'react-dom/client';
 import { App } from './App';
 
-import { SettingsContextProvider } from './features/Settings/SettingsContext/SettingsContext';
 import { GameContextProvider } from './features/GameContent/GameContext/GameContext';
 
 import './style/style.scss';
@@ -12,12 +11,10 @@ import { Provider } from 'react-redux';
 
 ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
   <React.StrictMode>
-    <SettingsContextProvider>
+    <Provider store={store}>
       <GameContextProvider>
-        <Provider store={store}>
-          <App />
-        </Provider>
+        <App />
       </GameContextProvider>
-    </SettingsContextProvider>
+    </Provider>
   </React.StrictMode>
 );

@@ -1,5 +1,5 @@
 import { useDispatch } from 'react-redux';
-import { closeModal } from '../../../store/slices/modalSlice';
+import { closeModal } from '../../../store/slices/modal/modalSlice';
 import { createPortal } from 'react-dom';
 import { ChildrenRoot } from '../../../types/shared';
 import FocusTrap from 'focus-trap-react';

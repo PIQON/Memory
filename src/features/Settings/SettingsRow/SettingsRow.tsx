@@ -1,12 +1,14 @@
-import { useContext } from 'react';
 import { Button } from '../../UI/Button/Button';
 import { SettingData } from '../SettingsData';
+import { useDispatch, useSelector } from 'react-redux';
+import { RootState } from '../../../store/store';
+import { changeSettings } from '../../../store/slices/game/gameSlice';
+
 import style from './SettingsRow.module.scss';
-import { SettingsContext } from '../SettingsContext/SettingsContext';
-import { SettingDataActions } from '../SettingsContext/SettingsContextActions';
 
 export const SettingsRow = ({ title, actions }: SettingData) => {
-  const { state, dispatch } = useContext(SettingsContext);
+  const { settings } = useSelector((state: RootState) => state.game);
+  const dispatch = useDispatch();
 
   return (
     <div className={style['settings-row']}>
@@ -19,14 +21,9 @@ export const SettingsRow = ({ title, actions }: SettingData) => {
             classNames={[
               'btn',
               'btn--settings',
-              state[name] === value ? 'btn--active' : '',
+              settings[name] === value ? 'btn--active' : '',
             ]}
-            onClick={() =>
-              dispatch({
-                type: SettingDataActions.CHANGE_SETTINGS,
-                payload: { name, value },
-              })
-            }
+            onClick={() => dispatch(changeSettings({ key: name, value }))}
           >
             {title}
           </Button>
