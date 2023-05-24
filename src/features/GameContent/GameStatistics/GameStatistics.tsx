@@ -7,24 +7,22 @@ import { useSelector } from 'react-redux';
 import { RootState } from '../../../store/store';
 
 const SinglePlayerPanel = () => {
-  const { statistics } = useGameContext();
-
-  return <StatisticsItem title="Moves" value={statistics[0]?.moves} />;
+  return <StatisticsItem title="Moves" value={0} />;
 };
 
 const MultiPlayerPanel = () => {
-  const { statistics, activePlayer } = useGameContext();
+  // const { statistics, activePlayer } = useGameContext();
   const matches = useMediaQuery('(max-width:48rem)');
   return (
     <Fragment>
-      {statistics.map((statistic) => (
+      {/* {statistics.map((statistic) => (
         <StatisticsItem
           key={statistic.player}
           title={`${matches ? 'P' : 'Player '}${statistic.player}`}
           value={statistic.moves}
           className={statistic.player === activePlayer ? 'current' : ''}
         />
-      ))}
+      ))} */}
     </Fragment>
   );
 };

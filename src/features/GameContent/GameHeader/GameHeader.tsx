@@ -11,7 +11,6 @@ import style from './GameHeader.module.scss';
 import { RouterLink } from '../../UI/RouterLink/RouterLink';
 
 export const GameHeader = () => {
-  const { resetGame } = useGameContext();
   const matches = useMediaQuery('(max-width:48rem)');
 
   return (
@@ -27,7 +26,7 @@ export const GameHeader = () => {
             <Button
               type="button"
               classNames={['btn', 'btn--settings', 'btn--primary']}
-              onClick={resetGame}
+              onClick={() => undefined}
             >
               Restart
             </Button>

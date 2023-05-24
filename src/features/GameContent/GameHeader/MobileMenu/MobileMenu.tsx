@@ -4,7 +4,6 @@ import { Fragment } from 'react';
 import { Modal } from '../../../UI/Modal/Modal';
 import { Button } from '../../../UI/Button/Button';
 
-import { useGameContext } from '../../GameContext/useGameContext';
 import { RouterLink } from '../../../UI/RouterLink/RouterLink';
 
 import style from './MobileMenu.module.scss';
@@ -17,8 +16,6 @@ import {
 export const MobileMenu = () => {
   const { isOpen } = useSelector((state: RootState) => state.modal);
   const dispatch = useDispatch();
-
-  const { resetGame } = useGameContext();
 
   return (
     <Fragment>
@@ -40,7 +37,6 @@ export const MobileMenu = () => {
                   type="button"
                   classNames={['btn', 'btn--settings', 'btn--primary']}
                   onClick={() => {
-                    resetGame();
                     dispatch(closeModal());
                   }}
                 >
@@ -52,7 +48,6 @@ export const MobileMenu = () => {
                   path="/"
                   title="New Game"
                   onClick={() => {
-                    resetGame();
                     dispatch(closeModal());
                   }}
                 />

@@ -1,12 +1,13 @@
 import { Button } from '../../../UI/Button/Button';
-import { useGameContext } from '../../GameContext/useGameContext';
-import style from './GameBoardCard.module.scss';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 import { icons } from '../../GameContext/utils';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '../../../../store/store';
+import { flipCard } from '../../../../store/slices/game/gameSlice';
+
+import style from './GameBoardCard.module.scss';
 
 export type Card = {
   id: string;
@@ -16,8 +17,8 @@ export type Card = {
 };
 
 export const GameBoardCard = ({ id, value, isActive, isComplete }: Card) => {
-  const { flipCard } = useGameContext();
   const { settings } = useSelector((state: RootState) => state.game);
+  const dispatch = useDispatch();
 
   return (
     <div
@@ -29,7 +30,7 @@ export const GameBoardCard = ({ id, value, isActive, isComplete }: Card) => {
         type="button"
         classNames={['btn', 'btn--card', `${isActive && 'btn--show'}`]}
         tabIndex={isComplete ? -1 : undefined}
-        onClick={() => flipCard(0)}
+        onClick={() => dispatch(flipCard(id))}
       >
         &nbsp;
       </Button>

@@ -12,7 +12,11 @@ import { useEffect } from 'react';
 import style from './Settings.module.scss';
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '../../store/store';
-import { generateCards, shuffleCards } from '../../store/slices/game/gameSlice';
+import {
+  generateCards,
+  generatePlayersStatistics,
+  shuffleCards,
+} from '../../store/slices/game/gameSlice';
 
 export const Settings = () => {
   const { settings } = useSelector((state: RootState) => state.game);
@@ -22,6 +26,7 @@ export const Settings = () => {
   useEffect(() => {
     dispatch(generateCards());
     dispatch(shuffleCards());
+    dispatch(generatePlayersStatistics());
   }, [settings]);
 
   return (

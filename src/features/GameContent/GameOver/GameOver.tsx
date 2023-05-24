@@ -8,8 +8,12 @@ import { useSelector } from 'react-redux';
 import { RootState } from '../../../store/store';
 
 export const GameOver = () => {
-  const { currentWinner, statistics, resetGame } = useGameContext();
+  // const { currentWinner, statistics, resetGame } = useGameContext();
   const { settings } = useSelector((state: RootState) => state.game);
+  const currentWinner = {
+    player: '1',
+    matches: 0,
+  };
 
   return (
     <div className={style['game-over']}>
@@ -33,7 +37,7 @@ export const GameOver = () => {
           }`}
           className="winner"
         />
-        {statistics
+        {/* {{statistics}
           .filter((statistic) => statistic.player !== currentWinner?.player)
           .map((statistic) => {
             return (
@@ -46,13 +50,13 @@ export const GameOver = () => {
                 }
               />
             );
-          })}
+          })} */}
       </div>
       <div className={style['game-over__menu']}>
         <Button
           type="button"
           classNames={['btn', 'btn--settings', 'btn--primary']}
-          onClick={resetGame}
+          onClick={() => undefined}
         >
           Restart
         </Button>

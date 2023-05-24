@@ -3,22 +3,43 @@ import { Wrapper } from '../UI/Wrapper/Wrapper';
 import { GameBoard } from './GameBoard/GameBoard';
 import { GameHeader } from './GameHeader/GameHeader';
 import { GameStatistics } from './GameStatistics/GameStatistics';
-import { useGameContext } from './GameContext/useGameContext';
 import { Modal } from '../UI/Modal/Modal';
 import { GameOver } from './GameOver/GameOver';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '../../store/store';
 import { useNavigate } from 'react-router';
+import {
+  cardMatches,
+  clearFlippedCards,
+  matchedCardsChange,
+} from '../../store/slices/game/gameSlice';
 
 export const GameContent = () => {
-  const { matchedCards } = useGameContext();
   const navigate = useNavigate();
-
-  const { cards } = useSelector((state: RootState) => state.game);
+  const dispatch = useDispatch();
+  const { cards, flippedCards, matchedCards } = useSelector(
+    (state: RootState) => state.game
+  );
 
   useEffect(() => {
     cards.length === 0 && navigate('/');
   }, []);
+
+  useEffect(() => {
+    if (flippedCards.length === 2) {
+      const [firstCard, secondCard] = flippedCards;
+      if (firstCard.value === secondCard.value) {
+        setTimeout(() => {
+          dispatch(matchedCardsChange());
+          dispatch(clearFlippedCards());
+        }, 1000);
+      }
+      setTimeout(() => {
+        dispatch(cardMatches());
+        dispatch(clearFlippedCards());
+      }, 1000);
+    }
+  }, [flippedCards]);
 
   return (
     <Fragment>

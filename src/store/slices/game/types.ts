@@ -12,3 +12,9 @@ export type UpdateSettingPayload = {
   key: keyof Settings;
   value: Settings[keyof Settings];
 };
+
+export type PlayersStatistics = {
+  player: number;
+  matches: number;
+  moves: number;
+};
