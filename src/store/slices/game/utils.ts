@@ -1,1 +1,43 @@
+import {
+  faStar,
+  faMusic,
+  faHeart,
+  faCamera,
+  faCalculator,
+  faCalendar,
+  faAddressCard,
+  faCoffee,
+  faBaby,
+  faAreaChart,
+  faAngry,
+  faVenusMars,
+  faSackDollar,
+  faRankingStar,
+  faAppleAlt,
+  faTablet,
+  faTShirt,
+  faRainbow,
+} from '@fortawesome/free-solid-svg-icons';
+
+export const icons = [
+  faStar,
+  faMusic,
+  faHeart,
+  faCamera,
+  faCalculator,
+  faCalendar,
+  faAddressCard,
+  faCoffee,
+  faBaby,
+  faAreaChart,
+  faAngry,
+  faVenusMars,
+  faSackDollar,
+  faRankingStar,
+  faAppleAlt,
+  faTablet,
+  faTShirt,
+  faRainbow,
+];
+
 export const MAXIMUM_CARD_REPETITION = 2;

@@ -2,12 +2,12 @@ import { Button } from '../../../UI/Button/Button';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
-import { icons } from '../../GameContext/utils';
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '../../../../store/store';
 import { flipCard } from '../../../../store/slices/game/gameSlice';
 
 import style from './GameBoardCard.module.scss';
+import { icons } from '../../../../store/slices/game/utils';
 
 export type Card = {
   id: string;

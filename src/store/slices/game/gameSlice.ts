@@ -22,6 +22,7 @@ type State = {
   matchedCards: Card[];
   statistics: PlayersStatistics[];
   activePlayer: SettingsPlayers;
+  currentWinner: PlayersStatistics | null;
 };
 
 const initialState: State = {
@@ -35,6 +36,7 @@ const initialState: State = {
   matchedCards: [],
   statistics: [],
   activePlayer: 1,
+  currentWinner: null,
 };
 
 export const gameSlice = createSlice({
@@ -56,7 +58,6 @@ export const gameSlice = createSlice({
 
       for (let i = 1; i <= generateSizeRange; i++) {
         for (let j = 0; j < MAXIMUM_CARD_REPETITION; j++) {
-          console.log(uuidv4());
           generatedCards.push({
             id: uuidv4(),
             value: i,
@@ -139,6 +140,52 @@ export const gameSlice = createSlice({
     clearFlippedCards: (state) => {
       state.flippedCards = [];
     },
+
+    changeActivePlayer: (state) => {
+      const newPlayer = (state.activePlayer + 1) as SettingsPlayers;
+      state.activePlayer = newPlayer > state.settings.players ? 1 : newPlayer;
+    },
+
+    currentGameWinner: (state) => {
+      const currentPlayerWinner = state.statistics.sort(
+        (a, b) => b.matches - a.matches
+      );
+
+      if (currentPlayerWinner[0] === currentPlayerWinner[1]) {
+        state.currentWinner = null;
+      }
+
+      state.currentWinner = currentPlayerWinner[0];
+    },
+
+    changePlayerStatistics: (
+      state,
+      action: PayloadAction<{ matchedCard: boolean }>
+    ) => {
+      const newMoves = state.statistics.map((statistic) => {
+        if (statistic.player === state.activePlayer) {
+          return {
+            ...statistic,
+            moves: (state.statistics[state.activePlayer - 1].moves += 1),
+            matches: action.payload
+              ? state.statistics[state.activePlayer - 1].matches + 1
+              : state.statistics[state.activePlayer - 1].matches,
+          };
+        }
+        return statistic;
+      });
+
+      state.statistics = newMoves;
+    },
+    resetGame: (state) => {
+      state.cards = state.cards.map((card) => {
+        return { ...card, isActive: false, isComplete: false };
+      });
+      state.activePlayer = 1;
+      state.matchedCards = [];
+      state.flippedCards = [];
+      state.currentWinner = null;
+    },
   },
 });
 
@@ -151,4 +198,8 @@ export const {
   matchedCardsChange,
   clearFlippedCards,
   generatePlayersStatistics,
+  resetGame,
+  changeActivePlayer,
+  changePlayerStatistics,
+  currentGameWinner,
 } = gameSlice.actions;

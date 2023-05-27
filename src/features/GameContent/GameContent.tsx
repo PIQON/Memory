@@ -10,7 +10,10 @@ import { RootState } from '../../store/store';
 import { useNavigate } from 'react-router';
 import {
   cardMatches,
+  changeActivePlayer,
+  changePlayerStatistics,
   clearFlippedCards,
+  currentGameWinner,
   matchedCardsChange,
 } from '../../store/slices/game/gameSlice';
 
@@ -31,13 +34,19 @@ export const GameContent = () => {
       if (firstCard.value === secondCard.value) {
         setTimeout(() => {
           dispatch(matchedCardsChange());
+          dispatch(changePlayerStatistics({ matchedCard: true }));
+          dispatch(currentGameWinner());
           dispatch(clearFlippedCards());
         }, 1000);
+      } else {
+        setTimeout(() => {
+          dispatch(cardMatches());
+          dispatch(changePlayerStatistics({ matchedCard: false }));
+          dispatch(changeActivePlayer());
+          dispatch(clearFlippedCards());
+          dispatch(currentGameWinner());
+        }, 1000);
       }
-      setTimeout(() => {
-        dispatch(cardMatches());
-        dispatch(clearFlippedCards());
-      }, 1000);
     }
   }, [flippedCards]);
 

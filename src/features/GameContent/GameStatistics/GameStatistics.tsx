@@ -1,28 +1,30 @@
 import { Fragment } from 'react';
-import { useGameContext } from '../GameContext/useGameContext';
-import style from './GameStatistics.module.scss';
 import { StatisticsItem } from './StatisticsItem/StatisticsItem';
 import { useMediaQuery } from '../../../hooks/useMediaQuery';
 import { useSelector } from 'react-redux';
 import { RootState } from '../../../store/store';
+
+import style from './GameStatistics.module.scss';
 
 const SinglePlayerPanel = () => {
   return <StatisticsItem title="Moves" value={0} />;
 };
 
 const MultiPlayerPanel = () => {
-  // const { statistics, activePlayer } = useGameContext();
   const matches = useMediaQuery('(max-width:48rem)');
+  const { statistics, activePlayer } = useSelector(
+    (state: RootState) => state.game
+  );
   return (
     <Fragment>
-      {/* {statistics.map((statistic) => (
+      {statistics.map((statistic) => (
         <StatisticsItem
           key={statistic.player}
           title={`${matches ? 'P' : 'Player '}${statistic.player}`}
           value={statistic.moves}
           className={statistic.player === activePlayer ? 'current' : ''}
         />
-      ))} */}
+      ))}
     </Fragment>
   );
 };

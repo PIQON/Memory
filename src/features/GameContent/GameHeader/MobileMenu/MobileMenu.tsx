@@ -12,6 +12,10 @@ import {
   closeModal,
   openModal,
 } from '../../../../store/slices/modal/modalSlice';
+import {
+  generatePlayersStatistics,
+  resetGame,
+} from '../../../../store/slices/game/gameSlice';
 
 export const MobileMenu = () => {
   const { isOpen } = useSelector((state: RootState) => state.modal);
@@ -38,6 +42,8 @@ export const MobileMenu = () => {
                   classNames={['btn', 'btn--settings', 'btn--primary']}
                   onClick={() => {
                     dispatch(closeModal());
+                    dispatch(resetGame());
+                    dispatch(generatePlayersStatistics());
                   }}
                 >
                   Restart

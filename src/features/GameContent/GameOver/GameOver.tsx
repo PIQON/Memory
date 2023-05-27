@@ -1,26 +1,30 @@
-import { useGameContext } from '../GameContext/useGameContext';
 import { StatisticsItem } from '../GameStatistics/StatisticsItem/StatisticsItem';
 import { Button } from '../../UI/Button/Button';
 import { RouterLink } from '../../UI/RouterLink/RouterLink';
 
-import style from './GameOver.module.scss';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '../../../store/store';
 
+import style from './GameOver.module.scss';
+import {
+  generatePlayersStatistics,
+  resetGame,
+} from '../../../store/slices/game/gameSlice';
+
 export const GameOver = () => {
-  // const { currentWinner, statistics, resetGame } = useGameContext();
-  const { settings } = useSelector((state: RootState) => state.game);
-  const currentWinner = {
-    player: '1',
-    matches: 0,
-  };
+  const { settings, currentWinner, statistics } = useSelector(
+    (state: RootState) => state.game
+  );
+  const dispatch = useDispatch();
+
+  console.log(currentWinner);
 
   return (
     <div className={style['game-over']}>
       <p className={style['game-over__title']}>
         {settings.players === 1
-          ? 'You did it!'
-          : `Player ${currentWinner?.player} Wins!`}
+          ? `${currentWinner ? 'You did it!' : "Its' a tie!"}`
+          : `${currentWinner ? `Player ${currentWinner?.player} Wins!` : ''}`}
       </p>
       <p className={style['game-over__description']}>
         Game over! Here are the results
@@ -37,7 +41,7 @@ export const GameOver = () => {
           }`}
           className="winner"
         />
-        {/* {{statistics}
+        {statistics
           .filter((statistic) => statistic.player !== currentWinner?.player)
           .map((statistic) => {
             return (
@@ -50,13 +54,16 @@ export const GameOver = () => {
                 }
               />
             );
-          })} */}
+          })}
       </div>
       <div className={style['game-over__menu']}>
         <Button
           type="button"
           classNames={['btn', 'btn--settings', 'btn--primary']}
-          onClick={() => undefined}
+          onClick={() => {
+            dispatch(resetGame());
+            dispatch(generatePlayersStatistics());
+          }}
         >
           Restart
         </Button>

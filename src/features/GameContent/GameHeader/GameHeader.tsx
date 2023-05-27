@@ -5,13 +5,18 @@ import { Link } from 'react-router-dom';
 import { Logo } from '../../UI/Logo/Logo';
 import { Button } from '../../UI/Button/Button';
 
-import { useGameContext } from '../GameContext/useGameContext';
+import { RouterLink } from '../../UI/RouterLink/RouterLink';
+import { useDispatch } from 'react-redux';
+import {
+  generatePlayersStatistics,
+  resetGame,
+} from '../../../store/slices/game/gameSlice';
 
 import style from './GameHeader.module.scss';
-import { RouterLink } from '../../UI/RouterLink/RouterLink';
 
 export const GameHeader = () => {
   const matches = useMediaQuery('(max-width:48rem)');
+  const dispatch = useDispatch();
 
   return (
     <header className={style['header']}>
@@ -26,7 +31,10 @@ export const GameHeader = () => {
             <Button
               type="button"
               classNames={['btn', 'btn--settings', 'btn--primary']}
-              onClick={() => undefined}
+              onClick={() => {
+                dispatch(resetGame());
+                dispatch(generatePlayersStatistics());
+              }}
             >
               Restart
             </Button>
