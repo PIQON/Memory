@@ -1,5 +1,5 @@
 import { ChildrenRoot } from '../../../types/shared';
-import style from './button.module.scss';
+import style from './Button.module.scss';
 
 type ButtonProps = {
   classNames: string[];
