@@ -7,7 +7,8 @@ import { RootState } from '../../../store/store';
 import style from './GameStatistics.module.scss';
 
 const SinglePlayerPanel = () => {
-  return <StatisticsItem title="Moves" value={0} />;
+  const { statistics } = useSelector((state: RootState) => state.game);
+  return <StatisticsItem title="Moves" value={statistics[0]?.moves} />;
 };
 
 const MultiPlayerPanel = () => {
