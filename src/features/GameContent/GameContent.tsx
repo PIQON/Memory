@@ -24,6 +24,23 @@ export const GameContent = () => {
     (state: RootState) => state.game
   );
 
+  const isGameFinished = cards.length === matchedCards.length;
+
+  const handleCardMatch = () => {
+    dispatch(matchedCardsChange());
+    dispatch(changePlayerStatistics({ matchedCard: true }));
+    dispatch(currentGameWinner());
+    dispatch(clearFlippedCards());
+  };
+
+  const handleCardMismatch = () => {
+    dispatch(cardMatches());
+    dispatch(changePlayerStatistics({ matchedCard: false }));
+    dispatch(changeActivePlayer());
+    dispatch(currentGameWinner());
+    dispatch(clearFlippedCards());
+  };
+
   useEffect(() => {
     cards.length === 0 && navigate('/');
   }, []);
@@ -32,27 +49,16 @@ export const GameContent = () => {
     if (flippedCards.length === 2) {
       const [firstCard, secondCard] = flippedCards;
       if (firstCard.value === secondCard.value) {
-        setTimeout(() => {
-          dispatch(matchedCardsChange());
-          dispatch(changePlayerStatistics({ matchedCard: true }));
-          dispatch(currentGameWinner());
-          dispatch(clearFlippedCards());
-        }, 1000);
+        setTimeout(handleCardMatch, 1000);
       } else {
-        setTimeout(() => {
-          dispatch(cardMatches());
-          dispatch(changePlayerStatistics({ matchedCard: false }));
-          dispatch(changeActivePlayer());
-          dispatch(clearFlippedCards());
-          dispatch(currentGameWinner());
-        }, 1000);
+        setTimeout(handleCardMismatch, 1000);
       }
     }
   }, [flippedCards]);
 
   return (
     <Fragment>
-      {matchedCards.length === cards.length && (
+      {isGameFinished && (
         <Modal>
           <GameOver />
         </Modal>
